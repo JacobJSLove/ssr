@@ -1,5 +1,7 @@
 import 'babel-polyfill';
 import express from 'express';
+import { matchRoutes } from 'react-router-config';
+import Routes from './client/Routes';
 import render from './helpers/render';
 import createStore from './helpers/createStore';
 
@@ -11,7 +13,18 @@ app.use(express.static('public'));
 app.get('*', (req, res) => {
     const store = createStore();
 
-    res.send(render(req, store));
+    // Check current routes with routes from router
+    // what components we need at this path
+    // route es6 deconstruct route object
+    // add store to loadingData function to manully dispatch
+    const promises = matchRoutes(Routes, req.path).map(({ route }) => {
+        return route.loadData ? route.loadData(store) : null;
+    });
+
+    Promise.all(promises).then(() => {
+        res.send(render(req, store));
+    });
+
 });
 
 app.listen(3000, () => {
