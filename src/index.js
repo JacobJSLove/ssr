@@ -15,7 +15,10 @@ app.get('*', (req, res) => {
 
     // Check current routes with routes from router
     // what components we need at this path
-    matchRoutes(Routes, req.path);
+    // route es6 deconstruct route object
+    matchRoutes(Routes, req.path).map(({ route }) => {
+        return route.loadData ? route.loadData() : null;
+    });
 
     res.send(render(req, store));
 });

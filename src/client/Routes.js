@@ -1,6 +1,20 @@
 import React from 'react';
 import Home from './component/Home';
-import UsersList from './component/UsersList';
+import UsersList, { loadData } from './component/UsersList';
+
+export default [{
+        path: '/',
+        component: Home,
+        exact: true
+    },
+    {
+        loadData,
+        path: '/users',
+        component: UsersList
+    }
+];
+
+// es6 loadData:loadData
 
 // export default () => {
 //     return (
@@ -12,14 +26,3 @@ import UsersList from './component/UsersList';
 // };
 
 //	for react-router-config we need to use objects for ssr!!
-
-export default [{
-        path: '/',
-        component: Home,
-        exact: true
-    },
-    {
-        path: '/users',
-        component: UsersList
-    }
-]
