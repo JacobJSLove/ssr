@@ -38918,8 +38918,9 @@ var mapStateToProps = function mapStateToProps(state) {
     return { users: state.users };
 };
 
-function loadData() {
-    console.log('Load some data');
+function loadData(store) {
+    // manualy dispatch action for ssr
+    return store.dispatch((0, _actions.fetchUsers)());
 }
 
 exports.loadData = loadData;

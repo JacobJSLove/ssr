@@ -16,11 +16,15 @@ app.get('*', (req, res) => {
     // Check current routes with routes from router
     // what components we need at this path
     // route es6 deconstruct route object
-    matchRoutes(Routes, req.path).map(({ route }) => {
-        return route.loadData ? route.loadData() : null;
+    // add store to loadingData function to manully dispatch
+    const promises = matchRoutes(Routes, req.path).map(({ route }) => {
+        return route.loadData ? route.loadData(store) : null;
     });
 
-    res.send(render(req, store));
+    Promise.all(promises).then(() => {
+        res.send(render(req, store));
+    });
+
 });
 
 app.listen(3000, () => {
