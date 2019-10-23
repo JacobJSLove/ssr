@@ -11,22 +11,20 @@ const app = express();
 // express let go every route to react-router
 app.use(express.static('public'));
 app.get('*', (req, res) => {
-    const store = createStore();
+  const store = createStore();
 
-    // Check current routes with routes from router
-    // what components we need at this path
-    // route es6 deconstruct route object
-    // add store to loadingData function to manully dispatch
-    const promises = matchRoutes(Routes, req.path).map(({ route }) => {
-        return route.loadData ? route.loadData(store) : null;
-    });
+  // Check current routes with routes from router
+  // what components we need at this path
+  // route es6 deconstruct route object
+  // add store to loadingData function to manully dispatch
+  const promises = matchRoutes(Routes, req.path)
+    .map(({ route }) => (route.loadData ? route.loadData(store) : null));
 
-    Promise.all(promises).then(() => {
-        res.send(render(req, store));
-    });
-
+  Promise.all(promises).then(() => {
+    res.send(render(req, store));
+  });
 });
 
 app.listen(3000, () => {
-    console.log("Port 3000");
+  console.log('Port 3000');
 });

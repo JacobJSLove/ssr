@@ -3,14 +3,14 @@ import HomePage from './pages/HomePage';
 import UsersListPage from './pages/UsersListPage';
 
 export default [{
-        ...HomePage,
-        path: '/',
-        exact: true
-    },
-    {
-        ...UsersListPage,
-        path: '/users'
-    }
+  ...HomePage,
+  path: '/',
+  exact: true,
+},
+{
+  ...UsersListPage,
+  path: '/users',
+},
 ];
 
 // es6 loadData:loadData

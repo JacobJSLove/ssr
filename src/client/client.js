@@ -13,8 +13,9 @@ import reducers from './reducers';
 const store = createStore(reducers, window.INITIAL_STATE, applyMiddleware(thunk));
 
 ReactDOM.hydrate(
-    <Provider store={store}>
-	    <BrowserRouter>
-			<div>{ renderRoutes(Routes) }</div>
-		</BrowserRouter>
-	</Provider>, document.querySelector('#root'));
+  <Provider store={store}>
+    <BrowserRouter>
+      <div>{ renderRoutes(Routes) }</div>
+    </BrowserRouter>
+  </Provider>, document.querySelector('#root'),
+);
