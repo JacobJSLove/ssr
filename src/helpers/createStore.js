@@ -6,8 +6,8 @@ import reducers from '../client/reducers';
 export default (req) => {
   // if user dont have cookie use ''
   const axiosInstance = axios.create({
-    baseURL: 'http://react-ssr-api.herokuapp.com/',
-    header: { cokkie: req.get('cokkie') || '' },
+    baseURL: 'http://react-ssr-api.herokuapp.com',
+    headers: { cookie: req.get('cookie') || '' }
   });
 
   const store = createStore(reducers, {}, applyMiddleware(thunk.withExtraArgument(axiosInstance)));

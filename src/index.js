@@ -8,12 +8,15 @@ import createStore from './helpers/createStore';
 
 const app = express();
 
-app.use('/api', proxy('http://react-ssr-api.herokuapp.com/', {
-  proxyReqOptDecorator(opts) {
-    opts.headers['x-forward-host'] = 'localhost:3000'; // eslint-disable-line no-param-reassign
-    return opts;
-  },
-}));
+app.use(
+  '/api',
+  proxy('http://react-ssr-api.herokuapp.com', {
+    proxyReqOptDecorator(opts) {
+      opts.headers['x-forwarded-host'] = 'localhost:3000';
+      return opts;
+    }
+  })
+);
 // express let go every route to react-router
 app.use(express.static('public'));
 app.get('*', (req, res) => {
