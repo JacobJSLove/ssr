@@ -8,11 +8,17 @@ import createStore from './helpers/createStore';
 
 const app = express();
 
-app.use('/api', proxy('http://react-ssr-api.herokuapp.com/'));
+app.use('/api', proxy('http://react-ssr-api.herokuapp.com/', {
+  proxyReqOptDecorator(opts) {
+    opts.header['x-forward-host'] = 'localhost:3000'; // eslint-disable-line no-param-reassign
+    return opts;
+  },
+}));
 // express let go every route to react-router
 app.use(express.static('public'));
 app.get('*', (req, res) => {
-  const store = createStore();
+  // move cookie from client to server
+  const store = createStore(req);
 
   // Check current routes with routes from router
   // what components we need at this path
