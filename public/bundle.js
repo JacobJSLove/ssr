@@ -8687,27 +8687,20 @@ function verifyPlainObject(value, displayName, methodName) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.fetchUsers = exports.FETCH_USERS = undefined;
-
-var _axios = __webpack_require__(463);
-
-var _axios2 = _interopRequireDefault(_axios);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var FETCH_USERS = exports.FETCH_USERS = 'fetch_users';
 var fetchUsers = exports.fetchUsers = function fetchUsers() {
   return function () {
-    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch) {
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(dispatch, getState, api) {
       var res;
       return regeneratorRuntime.wrap(function _callee$(_context) {
         while (1) {
           switch (_context.prev = _context.next) {
             case 0:
               _context.next = 2;
-              return _axios2.default.get('http://react-ssr-api.herokuapp.com/users');
+              return api.get('/users');
 
             case 2:
               res = _context.sent;
@@ -8726,7 +8719,7 @@ var fetchUsers = exports.fetchUsers = function fetchUsers() {
       }, _callee, undefined);
     }));
 
-    return function (_x) {
+    return function (_x, _x2, _x3) {
       return _ref.apply(this, arguments);
     };
   }();
@@ -9030,6 +9023,10 @@ var _reactRedux = __webpack_require__(175);
 
 var _reactRouterConfig = __webpack_require__(454);
 
+var _axios = __webpack_require__(463);
+
+var _axios2 = _interopRequireDefault(_axios);
+
 var _Routes = __webpack_require__(460);
 
 var _Routes2 = _interopRequireDefault(_Routes);
@@ -9040,8 +9037,12 @@ var _reducers2 = _interopRequireDefault(_reducers);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+var axiosInstance = _axios2.default.create({
+  baseURL: '/api'
+});
+
 // createStore(reducers, initicialState, middleware)
-var store = (0, _redux.createStore)(_reducers2.default, window.INITIAL_STATE, (0, _redux.applyMiddleware)(_reduxThunk2.default));
+var store = (0, _redux.createStore)(_reducers2.default, window.INITIAL_STATE, (0, _redux.applyMiddleware)(_reduxThunk2.default.withExtraArgument(axiosInstance)));
 
 _reactDom2.default.hydrate(_react2.default.createElement(
   _reactRedux.Provider,
@@ -34169,7 +34170,7 @@ module.exports = performance || {};
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/** @license React v16.10.2
+/** @license React v16.11.0
  * react-is.production.min.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -34191,7 +34192,7 @@ exports.isElement=function(a){return"object"===typeof a&&null!==a&&a.$$typeof===
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
-/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.10.2
+/* WEBPACK VAR INJECTION */(function(process) {/** @license React v16.11.0
  * react-is.development.js
  *
  * Copyright (c) Facebook, Inc. and its affiliates.
@@ -38794,13 +38795,13 @@ exports.default = [_extends({}, _HomePage2.default, {
 // export default () => {
 //     return (
 //         <div>
-// 			<Route exact path="/" component={Home} />
-// 			<Route path="/users" component={UsersList} />
-// 		</div>
+// 		<Route exact path="/" component={Home} />
+// 		<Route path="/users" component={UsersList} />
+// 	</div>
 //     )
 // };
 
-//	for react-router-config we need to use objects for ssr!!
+//for react-router-config we need to use objects for ssr!!
 
 /***/ }),
 /* 461 */
@@ -38830,7 +38831,7 @@ var Home = function Home() {
     ),
     _react2.default.createElement(
       'button',
-      { onClick: function onClick() {
+      { type: 'submit', onClick: function onClick() {
           return console.log('Hi');
         } },
       'Press me!'
@@ -38859,6 +38860,10 @@ var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
+var _propTypes = __webpack_require__(12);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
 var _reactRedux = __webpack_require__(175);
 
 var _actions = __webpack_require__(180);
@@ -38884,12 +38889,16 @@ var UsersList = function (_React$Component) {
     key: 'componentDidMount',
     value: function componentDidMount() {
       // No need cuz of first load on server
-      this.props.fetchUsers();
+      var fetchUsers = this.props.fetchUsers;
+
+      fetchUsers();
     }
   }, {
     key: 'renderUsers',
     value: function renderUsers() {
-      return this.props.users.map(function (user) {
+      var users = this.props.users;
+
+      return users.map(function (user) {
         return _react2.default.createElement(
           'li',
           { key: user.id },
@@ -38915,6 +38924,11 @@ var UsersList = function (_React$Component) {
 
   return UsersList;
 }(_react2.default.Component);
+
+UsersList.propTypes = {
+  users: _propTypes2.default.arrayOf(_propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])),
+  fetchUsers: _propTypes2.default.func
+};
 
 var mapStateToProps = function mapStateToProps(state) {
   return { users: state.users };

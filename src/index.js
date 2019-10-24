@@ -1,13 +1,14 @@
 import 'babel-polyfill';
 import express from 'express';
 import { matchRoutes } from 'react-router-config';
+import proxy from 'express-http-proxy';
 import Routes from './client/Routes';
 import render from './helpers/render';
 import createStore from './helpers/createStore';
 
 const app = express();
 
-
+app.use('/api', proxy('http://react-ssr-api.herokuapp.com/'));
 // express let go every route to react-router
 app.use(express.static('public'));
 app.get('*', (req, res) => {
