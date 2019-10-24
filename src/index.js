@@ -10,7 +10,7 @@ const app = express();
 
 app.use('/api', proxy('http://react-ssr-api.herokuapp.com/', {
   proxyReqOptDecorator(opts) {
-    opts.header['x-forward-host'] = 'localhost:3000'; // eslint-disable-line no-param-reassign
+    opts.headers['x-forward-host'] = 'localhost:3000'; // eslint-disable-line no-param-reassign
     return opts;
   },
 }));
