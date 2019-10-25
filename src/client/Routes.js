@@ -1,28 +1,39 @@
-import React from 'react';
-import Home from './component/Home';
-import UsersList, { loadData } from './component/UsersList';
+import HomePage from './pages/HomePage';
+import App from './App';
+import UsersListPage from './pages/UsersListPage';
+import AdminsListPage from './pages/AdminsListPage';
+import NotFoundPage from './pages/NotFoundPage';
+
 
 export default [{
-        path: '/',
-        component: Home,
-        exact: true
+  ...App,
+  routes: [{
+      ...HomePage,
+      path: '/',
+      exact: true,
     },
     {
-        loadData,
-        path: '/users',
-        component: UsersList
-    }
-];
+      ...UsersListPage,
+      path: '/users',
+    },
+    {
+      ...AdminsListPage,
+      path: '/admins',
+    },
+    {
+      ...NotFoundPage,
+    },
+  ],
+}];
 
 // es6 loadData:loadData
 
 // export default () => {
 //     return (
 //         <div>
-// 			<Route exact path="/" component={Home} />
-// 			<Route path="/users" component={UsersList} />
-// 		</div>
+// 	<Route exact path="/" component={Home} />
+// 	<Route path="/users" component={UsersList} />
+// </div>
 //     )
 // };
-
-//	for react-router-config we need to use objects for ssr!!
+// for react-router-config we need to use objects for ssr!!
