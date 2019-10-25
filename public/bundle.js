@@ -39735,18 +39735,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var Home = function Home() {
   return _react2.default.createElement(
     'div',
-    null,
+    { className: 'center-align', style: { marginTop: '200px' } },
     _react2.default.createElement(
-      'h5',
+      'h3',
       null,
-      'Home best comopnent'
-    ),
-    _react2.default.createElement(
-      'button',
-      { type: 'submit', onClick: function onClick() {
-          return console.log('Hi');
-        } },
-      'Press me!'
+      'Hello'
     )
   );
 };
@@ -39836,27 +39829,43 @@ var Header = function Header(_ref) {
   );
 
   return _react2.default.createElement(
-    'div',
+    'nav',
     null,
     _react2.default.createElement(
-      _reactRouterDom.Link,
-      { to: '/' },
-      'SSR page'
-    ),
-    _react2.default.createElement(
       'div',
-      null,
+      { className: 'nav-wrapper' },
       _react2.default.createElement(
         _reactRouterDom.Link,
-        { to: '/users' },
-        'users page'
+        { to: '/', className: 'brand-logo' },
+        'SSR page'
       ),
       _react2.default.createElement(
-        _reactRouterDom.Link,
-        { to: '/admins' },
-        'Admins page'
-      ),
-      authButton
+        'ul',
+        { className: 'right' },
+        _react2.default.createElement(
+          'li',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/users' },
+            'users page'
+          )
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          _react2.default.createElement(
+            _reactRouterDom.Link,
+            { to: '/admins' },
+            'Admins page'
+          )
+        ),
+        _react2.default.createElement(
+          'li',
+          null,
+          authButton
+        )
+      )
     )
   );
 };
