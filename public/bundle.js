@@ -39831,7 +39831,7 @@ var Header = function Header(_ref) {
     'Logout'
   ) : _react2.default.createElement(
     'a',
-    { href: '/api/google' },
+    { href: '/api/auth/google' },
     'Login'
   );
 

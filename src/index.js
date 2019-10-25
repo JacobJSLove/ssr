@@ -14,8 +14,8 @@ app.use(
     proxyReqOptDecorator(opts) {
       opts.headers['x-forwarded-host'] = 'localhost:3000';
       return opts;
-    }
-  })
+    },
+  }),
 );
 // express let go every route to react-router
 app.use(express.static('public'));
