@@ -12,10 +12,10 @@ const Header = ({ auth }) => {
   return (
     <nav>
       <div className="nav-wrapper">
-      <Link to="/" className="brand-logo">SSR page</Link>
+      <Link to="/" className="brand-logo">SSR</Link>
       <ul className="right">
-        <li><Link to="/users">users page</Link></li>
-        <li><Link to="/admins">Admins page</Link></li>
+        <li><Link to="/users">Users</Link></li>
+        <li><Link to="/admins">Admins</Link></li>
         <li>{ authButton }</li>
       </ul>
     </div>

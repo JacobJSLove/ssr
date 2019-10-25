@@ -28,7 +28,16 @@ app.get('*', (req, res) => {
   // route es6 deconstruct route object
   // add store to loadingData function to manully dispatch 
   const promises = matchRoutes(Routes, req.path)
-    .map(({ route }) => (route.loadData ? route.loadData(store) : null));
+    .map(({ route }) => (route.loadData ? route.loadData(store) : null))
+    .map((promise) => {
+      // check if its a promise not null
+      if (promise) {
+        // wrapper promise to success promise.all
+        return new Promise((resolve) => {
+          promise.then(resolve).catch(resolve);
+        });
+      }
+    });
 
   Promise.all(promises).then(() => {
     const context = {};
