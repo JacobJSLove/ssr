@@ -2,6 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { fetchAdmins } from '../actions';
+import requireAuth from '../component/hocs/requireAuth';
 
 class AdminsList extends React.Component {
   componentDidMount() {
@@ -36,5 +37,5 @@ const mapStateToProps = ({ admins }) => ({ admins });
 // loadData:loadData es6
 export default {
   loadData: ({ dispatch }) => dispatch(fetchAdmins()),
-  component: connect(mapStateToProps, { fetchAdmins })(AdminsList),
+  component: connect(mapStateToProps, { fetchAdmins })(requireAuth(AdminsList)),
 };
